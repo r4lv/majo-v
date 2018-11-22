@@ -4,8 +4,26 @@
 ![python version](https://img.shields.io/badge/python-3.4%E2%80%933.7-D19B62.svg)
 ![OS](https://img.shields.io/badge/OS-macOS%2010.11+-D19B62.svg?label=OS)
 
+Have you seen the amazing dynamic wallpapers on the new macOS 10.14 Mojave? Mojave calculates the position of the sun for your current time and location, compares them to the 16 images inside `Mojave (Dynamic).heic` and displays the one closest to your constellation as wallpaper.
+
+*majo-v* is a proof of concept to achieve the same, on all Macs, in ~50 lines of python.
+
+
+### installation
+
+Use [pipsi](https://github.com/mitsuhiko/pipsi) (or `pip`) to install the latest version:
+
+``` bash
+pipsi install git+https://github.com/r4lv/majo-v#egg=majo-v
+```
+
+Note that *majo-v* requires python 3.4+, and that pip(si) install the dependencies [click](https://click.palletsprojects.com) and [pyobjc-core](https://pythonhosted.org/pyobjc/) automatically.
+
+
 
 ### Usage
+
+To use *majo-v*, you need a folder with a bunch of images inside. You can put there as many as you want (e.g. the [original 16 images from macOS Mojave](https://technastic.com/macos-mojave-dynamic-wallpapers/)), as long as you rename the files based on the *time of the day they should appear first*, in the format `HH_MM.jpg`, e.g. `06_00.jpg` for an image which is to be displayed after 6am, `08_30.jpg` for an image displayed after 8:30, and so on. You then pass the folder as command line argument to *majo-v*, which chooses the most fitting image, and sets it as wallpaper on all your screens.
 
 ``` text
 Usage: majo-v [OPTIONS] FOLDER_WITH_IMAGES
@@ -13,10 +31,9 @@ Usage: majo-v [OPTIONS] FOLDER_WITH_IMAGES
 Options:
   --version
   -n, --dry-run
-  --current-time TEXT
+  --current-time HH_MM
   --help               Show this message and exit.
 ```
 
-The `FOLDER_WITH_IMAGES` is a folder where each file is named like `HH_MM.jpg`, e.g. `06_00.jpg`, `08_00.jpg`, and so forth. You do not need to start with `00_00.jpg`, nor do you need to have a file for every hour (or minute…). *majo-v* automatically chooses the latest image available, based on the current time. You can override the current time by using the `--current-time HH_MM` option.
-
-The `--dry-run` option does not actually change the wallpaper, just prints out the image it would use.
+- You can override the current time by using the `--current-time HH_MM` option, to force a specific wallpaper.
+- The `--dry-run` option does not actually change the wallpaper, just prints out the image it would use.

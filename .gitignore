@@ -1,0 +1,10 @@
+*.sublime-project
+*.sublime-workspace
+
+__pycache__
+*.egg-info
+/.eggs
+
+/node_modules/
+/.cache
+/yarn-error.log

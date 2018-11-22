@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+click = "*"
+pyobjc-core = "*"
+
+[dev-packages]
+sh = "*"
+"bump2version" = "*"
+majo_v = {editable = true, path = "."}
+pyobjc = "*"
+
+[requires]
+python_version = "3.6"
+
+[scripts]

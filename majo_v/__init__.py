@@ -1,0 +1,1 @@
+from .majo_v import *

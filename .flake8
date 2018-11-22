@@ -1,0 +1,23 @@
+[flake8]
+max-line-length = 100
+ignore =
+    ;====== flake8 defaults ======
+    E121,
+    E123,
+    E126,
+    E226,
+    E24,
+    E704,
+    W503,
+    W504,
+    
+    ;====== custom ======
+    ; One-line docstring should fit on one line with quotes:
+    D200,
+    ; Missing docstring in public class D101, method D102, function D103, ??,  magic method D105, ??,  __init__ D107:
+    D10,
+
+    ; 1 blank line required between summary line and description
+    ; D205,
+    ; First line should end with a period:
+    ; D400,

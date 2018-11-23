@@ -15,22 +15,11 @@ def _callback_version(ctx, param, value):
     ctx.exit()
 
 
-def index_last(l, s):
+def index_last(lst, key):
     """
-    Like ``l.index(s)``, but return the index of the last occurence instead of the first.
-
-    Parameters
-    ----------
-    l : list
-    s : str
-
-    Returns
-    -------
-    i : int
-        Index of the last occurence of ``s`` in ``l``.
-
+    Like ``lst.index(key)``, but return the index of the last occurence instead of the first.
     """
-    return len(l) - 1 - l[::-1].index(s)
+    return len(lst) - 1 - lst[::-1].index(key)
 
 
 def set_wallpaper(fn):

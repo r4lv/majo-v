@@ -1,4 +1,4 @@
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __description__ = "Mojave-like time aware wallpapers for all Macs"
 __url__ = "https://github.com/r4lv/majo-v"
 __author__ = "r4lv"

@@ -1,6 +1,6 @@
 # majo-v
 
-[![release](https://img.shields.io/badge/release-v0.1.0-D19B62.svg)](https://github.com/r4lv/majo-v/releases)
+[![release](https://img.shields.io/badge/release-v0.2.0-D19B62.svg)](https://github.com/r4lv/majo-v/releases)
 ![python version](https://img.shields.io/badge/python-3.4%E2%80%933.7-D19B62.svg)
 ![OS](https://img.shields.io/badge/OS-macOS%2010.11+-D19B62.svg?label=OS)
 

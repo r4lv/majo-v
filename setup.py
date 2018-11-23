@@ -5,11 +5,12 @@ from pathlib import Path
 
 setup_data = dict(
     name="majo_v",
-    python_requires=">=3.4.0",  # 3.4 introduced pathlib
+    python_requires=">=3.4.0",  # 'pathlib' introduced in 3.4
     install_requires=[
-        # pinned versions
         "click~=7.0",
-        "pyobjc-core~=5.1.1"
+        "pyobjc-core~=5.1.1",
+        "pendulum~=2.0.4",
+        "rumps~=0.2.2"
     ],
     classifiers=[
         # https://pypi.python.org/pypi?%3Aaction=list_classifiers

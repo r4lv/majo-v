@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 click = "*"
 pyobjc-core = "*"
+rumps = "*"
+pendulum = "*"
 
 [dev-packages]
 sh = "*"

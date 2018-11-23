@@ -6,7 +6,7 @@
 
 Have you seen the amazing dynamic wallpapers on the new macOS 10.14 Mojave? Mojave calculates the position of the sun for your current time and location, compares them to the 16 images inside `Mojave (Dynamic).heic` and displays the one closest to your constellation as wallpaper.
 
-*majo-v* is a proof of concept to achieve the same, on all Macs, in ~50 lines of python.
+*majo-v* is a proof of concept to achieve the same, on all Macs, in ~100 lines of python.
 
 
 ### installation

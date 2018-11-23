@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from pathlib import Path
 from datetime import datetime
 
@@ -77,5 +75,3 @@ def cli(dry_run, current_time, folder):
         set_wallpaper(images_in_folder[key_prev])
 
 
-if __name__ == "__main__":
-    cli()

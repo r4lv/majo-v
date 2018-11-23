@@ -1,7 +1,0 @@
-__version__ = "0.2.1"
-__description__ = "Mojave-like time aware wallpapers for all Macs"
-__url__ = "https://github.com/r4lv/majo-v"
-__author__ = "r4lv"
-__author_email__ = "r4lv@peaxels.com"
-__license__ = "MIT"
-__copyright__ = "Copyright 2018 r4lv"

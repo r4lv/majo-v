@@ -2,9 +2,11 @@
 
 from setuptools import find_packages, setup
 from pathlib import Path
+import re
 
 setup_data = dict(
     name="majo_v",
+    description="Mojave-like time aware wallpapers for all Macs",
     python_requires=">=3.4.0",  # 'pathlib' introduced in 3.4
     install_requires=[
         "click~=7.0",
@@ -32,18 +34,16 @@ with open(here / "README.md") as f:
     setup_data["long_description"] = "\n" + f.read()
     setup_data["long_description_content_type"] = "text/markdown"
 
-with open(here / setup_data["name"] / "__version__.py") as f:
-    about = {}
-    exec(f.read(), about)  # noqa:S102
+with open(here / f"{setup_data['name']}.py") as f:
+    content = f.read()
+    for k in ["version", "author", "author_email", "url", "license"]:
+        m = re.search(f"^__{k}__ = \"(.*?)\"", content, re.MULTILINE)
+        if not m:
+            raise ValueError(f"cannot read '{k}' from module file.")
 
+        setup_data[k] = m.group(1)
 
 setup(
-    version=about["__version__"],
-    description=about["__description__"],
-    author=about["__author__"],
-    author_email=about["__author_email__"],
-    url=about["__url__"],
-    license=about["__license__"],
     packages=find_packages(exclude=("tests",)),
     setup_requires=[
         "setuptools_git >= 0.3",

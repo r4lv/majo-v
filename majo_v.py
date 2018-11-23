@@ -7,7 +7,7 @@ import click
 import rumps
 import pendulum
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __author__ = "r4lv"
 __author_email__ = "r4lv@peaxels.com"
 __url__ = "https://github.com/r4lv/majo-v"

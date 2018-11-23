@@ -13,7 +13,7 @@ from .__version__ import __version__
 def _callback_version(ctx, param, value):
     if not value or ctx.resilient_parsing:
         return
-    click.echo(f"majo-v v{__version__}")
+    click.echo("majo-v v{}".format(__version__))
     ctx.exit()
 
 

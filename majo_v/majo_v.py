@@ -103,5 +103,5 @@ def cli(mode, current_time_key, folder):
     if mode == "gui":
         signal.signal(signal.SIGINT, lambda signal, frame: rumps.quit_application())
         MajoVApp(folder).run()
-    elif mode == "dry-run":
+    else:
         set_wallpaper_from_folder(folder, current_time_key, dry_run=(mode == "dry-run"))

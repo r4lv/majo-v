@@ -37,3 +37,13 @@ Options:
 
 - You can override the current time by using the `--current-time HH_MM` option, to force a specific wallpaper.
 - The `--dry-run` option does not actually change the wallpaper, just prints out the image it would use.
+
+
+
+### Further Reading
+
+- [pysolar](https://github.com/pingswept/pysolar) could be used to 
+- the extracted jpg from the `Mojave (Dynamic).heic` are also on [GitHub](https://github.com/xtai/mojave-dynamic-heic)
+- [pipwerks/OS-X-Wallpaper-Changer](https://github.com/pipwerks/OS-X-Wallpaper-Changer/) does something similar, but with applescript and just 6 wallpapers/day
+- [nshipster.com](https://nshipster.com/macos-dynamic-desktop/) has a nice nerdy article about dynamic wallpapers, CoreGraphics and HEIC. They also implemented a [solar position calculation](https://github.com/NSHipster/DynamicDesktop/blob/master/SolarPosition.playground/Sources/SolarPosition.swift) in Swift
+- [sindresorhus/macos-wallpaper](https://github.com/sindresorhus/macos-wallpaper/blob/master/Sources/wallpaper/Wallpaper.swift) has some more sophisticated handling of `NSWorkspace.shared.setDesktopImageURL` and companions

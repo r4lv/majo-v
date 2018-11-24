@@ -21,21 +21,10 @@ def _cb_version(ctx, param, value):
     ctx.exit()
 
 
-def index_last(lst, key):
-    """
-    Like ``lst.index(key)``, but return the index of the last occurence instead of the first.
-    """
-    return len(lst) - 1 - lst[::-1].index(key)
-
-
-def set_wallpaper(fn):
-    """
-    Set the image file ``fn`` as wallpaper for every screen.
-    """
-    file_url = NSURL.fileURLWithPath_(str(Path(fn).absolute()))
-    for screen in NSScreen.screens():
-        NSWorkspace.sharedWorkspace().setDesktopImageURL_forScreen_options_error_(file_url, screen,
-                                                                                  None, None)
+def set_wallpaper_for_every_screen(fn):
+    u = NSURL.fileURLWithPath_(str(Path(fn).absolute()))
+    for s in NSScreen.screens():
+        NSWorkspace.sharedWorkspace().setDesktopImageURL_forScreen_options_error_(u, s, None, None)
 
 
 def set_wallpaper_from_folder(folder, current_time_key=None, dry_run=False):
@@ -43,13 +32,13 @@ def set_wallpaper_from_folder(folder, current_time_key=None, dry_run=False):
         current_time_key = "{:HH_mm}".format(pendulum.now())
     images_in_folder = {f.stem: f for f in Path(folder).glob("*.jpg")}
     all_keys = sorted(list(images_in_folder.keys()) + [current_time_key])
-    pos_current = index_last(all_keys, current_time_key)
+    pos_current = len(all_keys) - 1 - all_keys[::-1].index(current_time_key)
     key_prev = all_keys[pos_current - 1]
 
     if dry_run:
         print("NOT loading wallpaper '{}' (dry-run mode)".format(images_in_folder[key_prev]))
     else:
-        set_wallpaper(images_in_folder[key_prev])
+        set_wallpaper_for_every_screen(images_in_folder[key_prev])
 
     return all_keys[pos_current + 1]
 

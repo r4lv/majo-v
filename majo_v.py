@@ -62,7 +62,7 @@ class MajoVApp(rumps.App):
     @rumps.clicked("set wallpaper now")
     def action_set_now(self, _=None, current_time_key=None):
         next_key = set_wallpaper_from_folder(self.folder, current_time_key)
-        self.next_run = pendulum.parse(next_key.replace("_", ":"))
+        self.next_run = pendulum.parse(next_key.replace("_", ":"), tz="local")
         if self.next_run < pendulum.now():
             self.next_run += pendulum.Duration(days=1)
 

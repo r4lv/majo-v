@@ -37,11 +37,6 @@ def set_wallpaper_from_folder(folder, now=None, dry_run=False):
     next_run
 
 
-class SpaceChangeDelegate(NSObject):
-    def activeSpaceDidChange_(self, notif):
-        self.callback()
-
-
 class MajoVApp(rumps.App):
     def __init__(self, folder):
         super().__init__("majo-v", menu=["set wallpaper now", None], quit_button="Quit majo-v",
@@ -51,18 +46,17 @@ class MajoVApp(rumps.App):
         rumps.Timer(callback=self.callback_timer, interval=15).start()
 
         nsapplication = NSApplication.sharedApplication()  # noqa:F841
-        self.scd = SpaceChangeDelegate.new()  # needs to be `self.`!
-        self.scd.callback = self.action_set_now
+        self.obsrv = type("r", (NSObject,), dict(spaceDidChange_=lambda s, n: self.set_now())).new()
         NSWorkspace.sharedWorkspace().notificationCenter().addObserver_selector_name_object_(
-            self.scd, "activeSpaceDidChange:", "NSWorkspaceActiveSpaceDidChangeNotification", None)
+            self.obsrv, "spaceDidChange:", "NSWorkspaceActiveSpaceDidChangeNotification", None)
 
     @rumps.clicked("set wallpaper now")
-    def action_set_now(self, _=None):
+    def set_now(self, _=None):
         self.next_run = set_wallpaper_from_folder(self.folder)
 
     def callback_timer(self, _):
         if pendulum.now() > self.next_run:
-            self.action_set_now()
+            self.set_now()
 
 
 @click.command(options_metavar="[--version] [--dry-run|--gui] [--current-time 'HH:MM']")

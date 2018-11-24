@@ -39,11 +39,10 @@ Usage: majo-v [--version] [--dry-run|--gui] [--current-time 'HH_MM'] FOLDER
   6am, '08_30.jpg' for an image displayed after 8:30, and so on.
 
 Options:
-  --version               show version information (majo-v v0.1.0)
-  -n, --dry-run           do nothing, just show which wallpaper would be set
-  -g, --gui               start menu bar app and update wallpaper automatically
-  --current-time 'HH_MM'  Overwrite current time used for selecting the most
-                          fitting image. Formatted like 'HH_MM'.
+  --version               Show version information.
+  -n, --dry-run           Do nothing, just show which wallpaper would be set.
+  -g, --gui               Start as menu bar app and update wallpaper automatically.
+  --current-time 'HH_MM'  Overwrite time used for selecting the most fitting image.
   --help                  Show this message and exit.
 ```
 

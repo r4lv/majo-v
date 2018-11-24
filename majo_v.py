@@ -76,13 +76,13 @@ class MajoVApp(rumps.App):
 
 @click.command(options_metavar="[--version] [--dry-run|--gui] [--current-time 'HH_MM']")
 @click.option("--version", is_flag=True, callback=_cb_version, expose_value=False, is_eager=True,
-              help="show version information (majo-v v{})".format(__version__))
+              help="Show version information. (majo-v v{})".format(__version__))
 @click.option("-n", "--dry-run", "mode", flag_value="dry-run", default=False,
-              help="do nothing, just show which wallpaper would be set")
+              help="Do nothing, just show which wallpaper would be set.")
 @click.option("-g", "--gui", "mode", flag_value="gui", default=False,
-              help="start menu bar app and update wallpaper automatically")
+              help="Start as menu bar app and update wallpaper automatically.")
 @click.option("--current-time", "current_time_key", default=None, metavar="'HH_MM'",
-              help=("Overwrite current time used for selecting the most fitting image."))
+              help=("Overwrite time used for selecting the most fitting image."))
 @click.argument("folder", type=click.Path(exists=True, resolve_path=True))
 def cli(mode, current_time_key, folder):
     """

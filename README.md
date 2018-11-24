@@ -1,8 +1,10 @@
-# majo-v
+![majo-v banner](assets/banner.png)
 
-[![release](https://img.shields.io/badge/release-v0.2.2-D19B62.svg)](https://github.com/r4lv/majo-v/releases)
-![python version](https://img.shields.io/badge/python-3.4%E2%80%933.7-D19B62.svg)
-![OS](https://img.shields.io/badge/OS-macOS%2010.11+-D19B62.svg?label=OS)
+<p align="center">
+  <a href="https://github.com/r4lv/majo-v/releases"><img alt="release" src="https://img.shields.io/badge/release-v0.2.2-555.svg"></a>
+  <img alt="python version" src="https://img.shields.io/badge/python-3.4%E2%80%933.7-555.svg">
+  <img alt="OS" src="https://img.shields.io/badge/OS-macOS%2010.11+-555.svg?label=OS">
+</p>
 
 Have you seen the amazing dynamic wallpapers on the new macOS 10.14 Mojave? Mojave calculates the position of the sun for your current time and location, compares them to the 16 images inside `Mojave (Dynamic).heic` and displays the one closest to your constellation as wallpaper.
 

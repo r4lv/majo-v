@@ -31,10 +31,10 @@ def set_wallpaper_from_folder(folder, now=None, dry_run=False):
             NSWorkspace.sharedWorkspace().setDesktopImageURL_forScreen_options_error_(
                 url, screen, None, None)
 
-    next_run = pendulum.parse(all_keys[pos_current + 1].replace("_", ":"), tz="local")
-    if next_run < now:
-        next_run += pendulum.Duration(days=1)
-    next_run
+    try:
+        return pendulum.parse(all_keys[pos_current + 1].replace("_", ":"), tz="local")
+    except IndexError:  # fails when current image is the last for today
+        return pendulum.parse(all_keys[0].replace("_", ":"), tz="local") + pendulum.Duration(days=1)
 
 
 class MajoVApp(rumps.App):

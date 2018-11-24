@@ -28,7 +28,7 @@ def set_wallpaper_from_folder(folder, now=None):
     try:
         return pendulum.parse(all_keys[pos_current + 1].replace("_", ":"), tz="local")
     except IndexError:  # fails when current image is the last for today
-        return pendulum.parse(all_keys[0].replace("_", ":"), tz="local") + pendulum.Duration(days=1)
+        return pendulum.parse(all_keys[0].replace("_", ":"), tz="local").add(days=1)
 
 
 class MajoVApp(rumps.App):
@@ -36,10 +36,10 @@ class MajoVApp(rumps.App):
         super().__init__("majo-v", menu=["set wallpaper now", None], quit_button="Quit majo-v",
                          icon=str(Path(__file__).parent.joinpath("menubar.tiff")), template=True)
         self.folder = folder
-        self.next_run = pendulum.now() - pendulum.Duration(hours=1)
+        self.next_run = pendulum.yesterday()
         rumps.Timer(callback=self.callback_timer, interval=15).start()
 
-        nsapplication = NSApplication.sharedApplication()  # noqa:F841
+        _ = NSApplication.sharedApplication()  # noqa:F841, required to enable notif-center
         self.obsrv = type("r", (NSObject,), dict(spaceDidChange_=lambda s, n: self.set_now())).new()
         NSWorkspace.sharedWorkspace().notificationCenter().addObserver_selector_name_object_(
             self.obsrv, "spaceDidChange:", "NSWorkspaceActiveSpaceDidChangeNotification", None)

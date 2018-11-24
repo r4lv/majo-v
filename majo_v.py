@@ -1,7 +1,7 @@
 from pathlib import Path
 import signal
 
-from AppKit import NSScreen, NSWorkspace
+from AppKit import NSScreen, NSWorkspace, NSApplication, NSObject
 from Foundation import NSURL
 import click
 import rumps
@@ -54,12 +54,23 @@ def set_wallpaper_from_folder(folder, current_time_key=None, dry_run=False):
     return all_keys[pos_current + 1]
 
 
+class SpaceChangeDelegate(NSObject):
+    def activeSpaceDidChange_(self, notif):
+        self.callback()
+
+
 class MajoVApp(rumps.App):
     def __init__(self, folder):
         super().__init__("majo-v", menu=["set now"])
         self.folder = folder
         self.next_run = pendulum.now() - pendulum.Duration(hours=1)
         rumps.Timer(callback=self.callback_timer, interval=15).start()
+
+        nsapplication = NSApplication.sharedApplication()  # noqa:F841
+        self.scd = SpaceChangeDelegate.new()  # needs to be `self.`!
+        self.scd.callback = self.action_set_now
+        NSWorkspace.sharedWorkspace().notificationCenter().addObserver_selector_name_object_(
+            self.scd, "activeSpaceDidChange:", "NSWorkspaceActiveSpaceDidChangeNotification", None)
 
     @rumps.clicked("set now")
     def action_set_now(self, _=None, current_time_key=None):

@@ -21,12 +21,6 @@ def _cb_version(ctx, param, value):
     ctx.exit()
 
 
-def set_wallpaper_for_every_screen(fn):
-    u = NSURL.fileURLWithPath_(str(Path(fn).absolute()))
-    for s in NSScreen.screens():
-        NSWorkspace.sharedWorkspace().setDesktopImageURL_forScreen_options_error_(u, s, None, None)
-
-
 def set_wallpaper_from_folder(folder, current_time_key=None, dry_run=False):
     if current_time_key is None:
         current_time_key = "{:HH_mm}".format(pendulum.now())
@@ -38,7 +32,10 @@ def set_wallpaper_from_folder(folder, current_time_key=None, dry_run=False):
     if dry_run:
         print("NOT loading wallpaper '{}' (dry-run mode)".format(images_in_folder[key_prev]))
     else:
-        set_wallpaper_for_every_screen(images_in_folder[key_prev])
+        url = NSURL.fileURLWithPath_(str(images_in_folder[key_prev]))
+        for screen in NSScreen.screens():
+            NSWorkspace.sharedWorkspace().setDesktopImageURL_forScreen_options_error_(
+                url, screen, None, None)
 
     return all_keys[pos_current + 1]
 

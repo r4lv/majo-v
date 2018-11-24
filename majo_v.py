@@ -14,13 +14,6 @@ __url__ = "https://github.com/r4lv/majo-v"
 __license__ = "MIT"
 
 
-def _cb_version(ctx, param, value):
-    if not value or ctx.resilient_parsing:
-        return
-    click.echo("majo-v v{}".format(__version__))
-    ctx.exit()
-
-
 def set_wallpaper_from_folder(folder, now=None, dry_run=False):
     if now is None:
         now = pendulum.now()
@@ -73,8 +66,7 @@ class MajoVApp(rumps.App):
 
 
 @click.command(options_metavar="[--version] [--dry-run|--gui] [--current-time 'HH:MM']")
-@click.option("--version", is_flag=True, callback=_cb_version, expose_value=False, is_eager=True,
-              help="Show version information. (majo-v v{})".format(__version__))
+@click.version_option(version=__version__, message="%(prog)s v%(version)s")
 @click.option("-n", "--dry-run", "mode", flag_value="dry", default=False,
               help="Do nothing, just show which wallpaper would be set.")
 @click.option("-g", "--gui", "mode", flag_value="gui", default=False,

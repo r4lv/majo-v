@@ -51,6 +51,7 @@ Options:
    ``` bash
    majo-v --gui ~/Pictures/Mojave-Wallpaper &
    ```
+   ![menu bar icon screenshot](assets/screenshot-menubar.png)
 - The `--dry-run` option does not actually change the wallpaper, just prints out the image it would use.
 - You can override the current time by using the `--current-time HH_MM` option, to force a specific wallpaper. Useful in combination with `--dry-run`, to check what *majo-v* does.
 
@@ -72,9 +73,29 @@ Options:
 
 MacOS 10.14 Mojave's dynamic desktop feature uses single `.heic` files which contain a sequence of 16 images, together with metadata (altitude & azimuth of the sun in every image, and index of the default *dark* and *light* images when dynamic mode is disabled). I found no way of extracting the images on macOS version before Mojave (metadata can be extracted with 10.13 High Sierra), so you sadly cannot use `.heic` files with *majo-v*
 
+
 #### (no) sun position calculation
 
 This would be quite feasable, but I think the gain is little. Just rename your files in winter, so that the sunrise matches again ;)
+
+
+#### Retina menu bar icon
+
+The `menubar.tiff` contains two versions of the icon, so it looks good on retina too. The icons were created with these parameters:
+
+- `menubar.png`, 20×20px
+  - 15×15px circle shape with 1px centered stroke
+  - 1px padding at the top, 2px padding at the bottom
+- `menubar@2x.png`, 40×40px
+  - 30×30px circle shape with 2px centered stroke
+  - 4px padding at top and bottom
+
+…and then combined to a single `menubar.tiff` with
+``` bash
+tiffutil -cathidpicheck menubar.png menubar@2x.png -out menubar.tiff
+```
+
+No need to compress the `.png`s, as the `.tiff` stores the pixel values only.
 
 
 ## Further Reading

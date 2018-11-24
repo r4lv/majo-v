@@ -50,7 +50,8 @@ class SpaceChangeDelegate(NSObject):
 
 class MajoVApp(rumps.App):
     def __init__(self, folder):
-        super().__init__("majo-v", menu=["set now"])
+        super().__init__("majo-v", menu=["set wallpaper now", None], quit_button="Quit majo-v",
+                         icon=str(Path(__file__).parent.joinpath("menubar.tiff")), template=True)
         self.folder = folder
         self.next_run = pendulum.now() - pendulum.Duration(hours=1)
         rumps.Timer(callback=self.callback_timer, interval=15).start()
@@ -61,7 +62,7 @@ class MajoVApp(rumps.App):
         NSWorkspace.sharedWorkspace().notificationCenter().addObserver_selector_name_object_(
             self.scd, "activeSpaceDidChange:", "NSWorkspaceActiveSpaceDidChangeNotification", None)
 
-    @rumps.clicked("set now")
+    @rumps.clicked("set wallpaper now")
     def action_set_now(self, _=None, current_time_key=None):
         next_key = set_wallpaper_from_folder(self.folder, current_time_key)
         self.next_run = pendulum.parse(next_key.replace("_", ":"))

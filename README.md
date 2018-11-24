@@ -98,6 +98,11 @@ tiffutil -cathidpicheck menubar.png menubar@2x.png -out menubar.tiff
 No need to compress the `.png`s, as the `.tiff` stores the pixel values only.
 
 
+#### Multiple spaces
+
+By design of macOS, one cannot set a wallpaper for all spaces at once. To come around this limitation, *majo-v* watches if you change the active space (by listening to `NSWorkspaceActiveSpaceDidChangeNotification`) and applies the correct wallpaper. *majo-v* has to be started with `--gui` for this, so that it can sit in the menu bar and watch.
+
+
 ## Further Reading
 
 - [pysolar](https://github.com/pingswept/pysolar) could be used to calculate the current sun position

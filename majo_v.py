@@ -21,9 +21,10 @@ def _cb_version(ctx, param, value):
     ctx.exit()
 
 
-def set_wallpaper_from_folder(folder, current_time_key=None, dry_run=False):
-    if current_time_key is None:
-        current_time_key = "{:HH_mm}".format(pendulum.now())
+def set_wallpaper_from_folder(folder, now=None, dry_run=False):
+    if now is None:
+        now = pendulum.now()
+    current_time_key = "{:HH_mm}".format(now)
     images_in_folder = {f.stem: f for f in Path(folder).glob("*.jpg")}
     all_keys = sorted(list(images_in_folder.keys()) + [current_time_key])
     pos_current = len(all_keys) - 1 - all_keys[::-1].index(current_time_key)
@@ -37,7 +38,10 @@ def set_wallpaper_from_folder(folder, current_time_key=None, dry_run=False):
             NSWorkspace.sharedWorkspace().setDesktopImageURL_forScreen_options_error_(
                 url, screen, None, None)
 
-    return all_keys[pos_current + 1]
+    next_run = pendulum.parse(all_keys[pos_current + 1].replace("_", ":"), tz="local")
+    if next_run < now:
+        next_run += pendulum.Duration(days=1)
+    next_run
 
 
 class SpaceChangeDelegate(NSObject):
@@ -60,28 +64,25 @@ class MajoVApp(rumps.App):
             self.scd, "activeSpaceDidChange:", "NSWorkspaceActiveSpaceDidChangeNotification", None)
 
     @rumps.clicked("set wallpaper now")
-    def action_set_now(self, _=None, current_time_key=None):
-        next_key = set_wallpaper_from_folder(self.folder, current_time_key)
-        self.next_run = pendulum.parse(next_key.replace("_", ":"), tz="local")
-        if self.next_run < pendulum.now():
-            self.next_run += pendulum.Duration(days=1)
+    def action_set_now(self, _=None):
+        self.next_run = set_wallpaper_from_folder(self.folder)
 
     def callback_timer(self, _):
         if pendulum.now() > self.next_run:
             self.action_set_now()
 
 
-@click.command(options_metavar="[--version] [--dry-run|--gui] [--current-time 'HH_MM']")
+@click.command(options_metavar="[--version] [--dry-run|--gui] [--current-time 'HH:MM']")
 @click.option("--version", is_flag=True, callback=_cb_version, expose_value=False, is_eager=True,
               help="Show version information. (majo-v v{})".format(__version__))
-@click.option("-n", "--dry-run", "mode", flag_value="dry-run", default=False,
+@click.option("-n", "--dry-run", "mode", flag_value="dry", default=False,
               help="Do nothing, just show which wallpaper would be set.")
 @click.option("-g", "--gui", "mode", flag_value="gui", default=False,
               help="Start as menu bar app and update wallpaper automatically.")
-@click.option("--current-time", "current_time_key", default=None, metavar="'HH_MM'",
+@click.option("--current-time", "time", default=None, metavar="'HH:MM'",
               help=("Overwrite time used for selecting the most fitting image."))
 @click.argument("folder", type=click.Path(exists=True, resolve_path=True))
-def cli(mode, current_time_key, folder):
+def cli(mode, time, folder):
     """
     Set the most fitting image from the given folder as wallpaper.
 
@@ -93,4 +94,4 @@ def cli(mode, current_time_key, folder):
         signal.signal(signal.SIGINT, lambda signal, frame: rumps.quit_application())
         MajoVApp(folder).run()
     else:
-        set_wallpaper_from_folder(folder, current_time_key, dry_run=(mode == "dry-run"))
+        set_wallpaper_from_folder(folder, time and pendulum.parse(time, tz="local"), mode == "dry")

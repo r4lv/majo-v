@@ -30,7 +30,7 @@ Note that *majo-v* requires python 3.4+.
 To use *majo-v*, you need a folder with a bunch of images inside. You can put there as many as you want (e.g. the [original 16 images from macOS Mojave](https://technastic.com/macos-mojave-dynamic-wallpapers/)), as long as you rename the files based on the *time of the day they should appear first*, in the format `HH_MM.jpg`, e.g. `06_00.jpg` for an image which is to be displayed after 6am, `08_30.jpg` for an image displayed after 8:30, and so on. You then pass the folder as command line argument to *majo-v*, which chooses the most fitting image, and sets it as wallpaper on all your screens.
 
 ``` text
-Usage: majo-v [--version] [--dry-run|--gui] [--current-time 'HH_MM'] FOLDER
+Usage: majo-v [--version] [--dry-run|--gui] [--current-time 'HH:MM'] FOLDER
 
   Set the most fitting image from the given folder as wallpaper.
 
@@ -43,7 +43,7 @@ Options:
   --version               Show version information.
   -n, --dry-run           Do nothing, just show which wallpaper would be set.
   -g, --gui               Start as menu bar app and update wallpaper automatically.
-  --current-time 'HH_MM'  Overwrite time used for selecting the most fitting image.
+  --current-time 'HH:MM'  Overwrite time used for selecting the most fitting image.
   --help                  Show this message and exit.
 ```
 

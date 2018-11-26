@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/r4lv/majo-v/releases"><img alt="release" src="https://img.shields.io/badge/release-v0.3.2-555.svg"></a>
-  <img alt="python version" src="https://img.shields.io/badge/python-3.4%E2%80%933.7-555.svg">
+  <img alt="python version" src="https://img.shields.io/badge/python-2.7,%203.4+-555.svg">
   <img alt="OS" src="https://img.shields.io/badge/OS-macOS%2010.11+-555.svg?label=OS">
   <img alt="mayonnaise" src="https://img.shields.io/badge/mayonnaise-lots-555.svg">
 </p>
@@ -19,10 +19,10 @@ The recommended way of installing *majo-v* is with [pipsi](https://github.com/mi
 ``` bash
 pipsi install git+https://github.com/r4lv/majo-v#egg=majo-v
 # or
-pip3 install git+https://github.com/r4lv/majo-v#egg=majo-v
+pip install git+https://github.com/r4lv/majo-v#egg=majo-v
 ```
 
-Note that *majo-v* requires python 3.4+.
+Note that *majo-v* requires python 2.7 or 3.4+.
 
 
 ## Usage
@@ -100,6 +100,15 @@ No need to compress the `.png`s, as the `.tiff` stores the pixel values only.
 
 By design of macOS, one cannot set a wallpaper for all spaces at once. To come around this limitation, *majo-v* watches if you change the active space (by listening to `NSWorkspaceActiveSpaceDidChangeNotification`) and applies the correct wallpaper. *majo-v* has to be started with `--gui` for this, so that it can sit in the menu bar and watch.
 
+
+
+#### python2 compatibility
+
+*majo-v* is compatible with python 2.7 and python 3.4+.
+
+- dict comprehension: python 2.7+
+- pathlib: python 3.4+, but [pathlib2](https://pypi.org/project/pathlib2/) backport for older versions
+- pendulum: python 2.7+
 
 ## Further Reading
 

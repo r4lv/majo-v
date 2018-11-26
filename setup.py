@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 
 from setuptools import find_packages, setup
-from pathlib import Path
+import os
 import re
 
 setup_data = dict(
     name="majo_v",
     description="Mojave-like time aware wallpapers for all Macs",
-    python_requires=">=3.4.0",  # 'pathlib' introduced in 3.4
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
     install_requires=[
-        "click~=7.0",
-        "pyobjc-core~=5.1.1",
-        "pendulum~=2.0.4",
-        "rumps~=0.2.2"
+        "click>=6.0",
+        "pyobjc-core>=4.0",
+        "pendulum~=2.0",
+        "rumps==0.2.2",
+        "pathlib2;python_version<\"3.4\""
     ],
     classifiers=[
         # https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -20,6 +21,7 @@ setup_data = dict(
         "Environment :: Console",
         "Operating System :: MacOS",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
     ],
     entry_points={
@@ -28,18 +30,18 @@ setup_data = dict(
 )
 
 
-here = Path(__file__).parent.absolute()
+here = os.path.abspath(os.path.dirname(__file__))
 
-with open(here / "README.md") as f:
+with open(os.path.join(here, "README.md")) as f:
     setup_data["long_description"] = "\n" + f.read()
     setup_data["long_description_content_type"] = "text/markdown"
 
-with open(here / f"{setup_data['name']}.py") as f:
+with open(os.path.join(here, "{}.py".format(setup_data["name"]))) as f:
     content = f.read()
     for k in ["version", "author", "author_email", "url", "license"]:
-        m = re.search(f"^__{k}__ = \"(.*?)\"", content, re.MULTILINE)
+        m = re.search("^__{}__ = \"(.*?)\"".format(k), content, re.MULTILINE)
         if not m:
-            raise ValueError(f"cannot read '{k}' from module file.")
+            raise ValueError("cannot read '{}' from module file.".format(k))
 
         setup_data[k] = m.group(1)
 

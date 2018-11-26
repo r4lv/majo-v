@@ -1,4 +1,7 @@
-from pathlib import Path
+try:
+    from pathlib import Path
+except ImportError:  # python2
+    from pathlib2 import Path
 import signal
 
 from AppKit import NSScreen, NSWorkspace, NSApplication, NSObject
@@ -27,14 +30,14 @@ def set_wallpaper_from_folder(folder, now=None):
 
     try:
         return pendulum.parse(all_keys[pos_current + 1].replace("_", ":"), tz="local")
-    except IndexError:  # fails when current image is the last for today
+    except IndexError:  # fails when current image is the last one for today
         return pendulum.parse(all_keys[0].replace("_", ":"), tz="local").add(days=1)
 
 
 class MajoVApp(rumps.App):
     def __init__(self, folder):
-        super().__init__("majo-v", menu=["set wallpaper now", None], quit_button="Quit majo-v",
-                         icon=str(Path(__file__).parent.joinpath("menubar.tiff")), template=True)
+        super(MajoVApp, self).__init__("majo-v", None, str(Path(__file__).parent / "menubar.tiff"),
+                                       True, ["set wallpaper now", None], "Quit majo-v")
         self.folder = folder
         self.next_run = pendulum.yesterday()
         rumps.Timer(callback=self.callback_timer, interval=15).start()

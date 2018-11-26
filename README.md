@@ -1,7 +1,7 @@
 ![majo-v banner](assets/banner.png)
 
 <p align="center">
-  <a href="https://github.com/r4lv/majo-v/releases"><img alt="release" src="https://img.shields.io/badge/release-v0.3.2-555.svg"></a>
+  <a href="https://github.com/r4lv/majo-v/releases"><img alt="release" src="https://img.shields.io/badge/release-v0.4.0-555.svg"></a>
   <img alt="python version" src="https://img.shields.io/badge/python-2.7,%203.4+-555.svg">
   <img alt="OS" src="https://img.shields.io/badge/OS-macOS%2010.11+-555.svg?label=OS">
   <img alt="mayonnaise" src="https://img.shields.io/badge/mayonnaise-lots-555.svg">

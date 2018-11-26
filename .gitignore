@@ -1,10 +1,7 @@
 *.sublime-project
 *.sublime-workspace
 
+*.pyc
 __pycache__
 *.egg-info
 /.eggs
-
-/node_modules/
-/.cache
-/yarn-error.log

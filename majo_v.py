@@ -56,14 +56,16 @@ class MajoVApp(rumps.App):
             self.set_now()
 
 
-@click.command(options_metavar="[--version] [--gui] [--current-time 'HH:MM']")
+@click.command(options_metavar="[--version] [--no-icon|--once] [--current-time 'HH:MM']")
 @click.version_option(version=__version__, message="%(prog)s v%(version)s")
-@click.option("-g", "--gui", is_flag=True, default=False,
-              help="Start as menu bar app and update wallpaper automatically.")
-@click.option("-t", "--current-time", default=None, metavar="'HH:MM'",
+@click.option("--no-icon", "mode", flag_value="faceless", default=False,
+              help="Do not show the menu bar icon.")
+@click.option("--once", "mode", flag_value="once", default=False,
+              help="Set wallpaper and quit.")
+@click.option("--current-time", default=None, metavar="'HH:MM'",
               help=("Overwrite time used for selecting the most fitting image."))
 @click.argument("folder", type=click.Path(exists=True, resolve_path=True))
-def cli(gui, current_time, folder):
+def cli(mode, current_time, folder):
     """
     Set the most fitting image from the given folder as wallpaper.
 
@@ -71,8 +73,11 @@ def cli(gui, current_time, folder):
     where they should appear first, in the format 'HH_MM.jpg', e.g. '06_00.jpg' for an image which
     is to be displayed after 6am, '08_30.jpg' for an image displayed after 8:30, and so on.
     """
-    if gui:
-        signal.signal(signal.SIGINT, lambda signal, frame: rumps.quit_application())
-        MajoVApp(folder).run()
-    else:
+    if mode == "once":
         set_wallpaper_from_folder(folder, current_time and pendulum.parse(current_time, tz="local"))
+    else:
+        signal.signal(signal.SIGINT, lambda signal, frame: rumps.quit_application())
+        if mode == "faceless":
+            rumps.rumps.AppHelper.runEventLoop = rumps.rumps.AppHelper.runConsoleEventLoop
+            rumps.rumps.NSApp.initializeStatusBar = lambda self: None
+        MajoVApp(folder).run()

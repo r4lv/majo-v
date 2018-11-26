@@ -30,7 +30,7 @@ Note that *majo-v* requires python 2.7 or 3.4+.
 To use *majo-v*, you need a folder with a bunch of images inside. You can put there as many as you want (e.g. the [original 16 images from macOS Mojave](https://technastic.com/macos-mojave-dynamic-wallpapers/)), as long as you rename the files based on the *time of the day they should appear first*, in the format `HH_MM.jpg`, e.g. `06_00.jpg` for an image which is to be displayed after 6am, `08_30.jpg` for an image displayed after 8:30, and so on. You then pass the folder as command line argument to *majo-v*, which chooses the most fitting image, and sets it as wallpaper on all your screens.
 
 ``` text
-Usage: majo-v [--version] [--gui] [--current-time 'HH:MM'] FOLDER
+Usage: majo-v [--version] [--no-icon|--once] [--current-time 'HH:MM'] FOLDER
 
   Set the most fitting image from the given folder as wallpaper.
 
@@ -40,17 +40,20 @@ Usage: majo-v [--version] [--gui] [--current-time 'HH:MM'] FOLDER
   6am, '08_30.jpg' for an image displayed after 8:30, and so on.
 
 Options:
-  --version                   Show the version and exit.
-  -g, --gui                   Start as menu bar app and update wallpaper automatically.
-  -t, --current-time 'HH:MM'  Overwrite time used for selecting the most fitting image.
-  --help                      Show this message and exit.
+  --version               Show the version and exit.
+  --no-icon               Do not show the menu bar icon.
+  --once                  Set wallpaper and quit.
+  --current-time 'HH:MM'  Overwrite time used for selecting the most fitting image.
+  --help                  Show this message and exit.
 ```
 
-- by default, *majo-v* sets the wallpaper and exits. For a more Mojave-like experience, start *majo-v* with the `--gui` switch, which starts a menu bar app. The menu bar app watches the current time in the background, and updates the wallpaper whenever necessary. Use `&` to detach *majo-v* from your terminal:
+- By default, *majo-v* sits in the menu bar and updates the wallpaper whenever needed. Use `&` to run *majo-v* in the background and detach it from the terminal:
    ``` bash
-   majo-v --gui ~/Pictures/Mojave-Wallpaper &
+   majo-v ~/Pictures/Mojave-Wallpaper &
    ```
    ![menu bar icon screenshot](assets/screenshot-menubar.png)
+- With `--no-icon`, you won't see a menu bar icon, but the functionality is the same. Note that when you use `&` in this case (don't do that), you will `top` or *Activity Monitor* to quit *majo-v*!
+- With `--once` *majo-v* will just set the wallpaper based on the current time, and quit.
 - You can override the current time by using the `--current-time HH:MM` option, to force a specific wallpaper. Useful to check what *majo-v* does.
 
 
